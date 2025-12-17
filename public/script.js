@@ -1,15 +1,11 @@
-// ===============================
 // Автозаполнение регионов
-// ===============================
 $.get('/api/regions', regions => {
     $('#regionInput').autocomplete({
         source: regions
     });
 });
 
-// ===============================
 // Автозаполнение остановок по региону
-// ===============================
 $('#regionInput').on('change', function () {
     const region = $(this).val();
 
@@ -34,9 +30,7 @@ $('#regionInput').on('change', function () {
     });
 });
 
-// ===============================
 // Поиск автобусов по остановке
-// ===============================
 $('#searchBuses').on('click', function () {
     if (!selectedStop) {
         alert('Please select a bus stop from the list');
@@ -68,9 +62,7 @@ $('#searchBuses').on('click', function () {
     });
 });
 
-// ===============================
 // Загрузка времени прибытия автобуса
-// ===============================
 function loadBusTimes(stopId, busName) {
     $.get('/api/bus-times', { stopId, busName }, times => {
         $('#busTimes').empty();
@@ -102,9 +94,7 @@ function loadBusTimes(stopId, busName) {
     });
 }
 
-// ===============================
 // Поиск ближайшей остановки по геолокации
-// ===============================
 $('#findNearest').on('click', () => {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(position => {
@@ -142,9 +132,7 @@ $('#findNearest').on('click', () => {
     }
 });
 
-// ===============================
 // Очистка выбора
-// ===============================
 $('#clearSelection').on('click', () => {
     selectedStop = null;
     $('#regionInput').val('');
