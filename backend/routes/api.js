@@ -30,15 +30,21 @@ Router.get('/stops', async (req, res) => {
 Router.get('/regions', async (req, res) => {
     try {
         const regionName = req.query.region || '';
+
         const regions = await StopModel.findAll({
-            where: regionName ? { stop_area: { [Op.like]: `%${regionName}%` } } : {},
-            attributes: ['stop_area'],
-            group: ['stop_area']
+            where: regionName
+                ? { stop_area: { [Op.like]: `%${regionName}%` } }
+                : {},
+            attributes: [
+                [require('sequelize').fn('DISTINCT',
+                 require('sequelize').col('stop_area')), 'stop_area']
+            ],
+            raw: true
         });
 
         res.status(200).json(regions.map(r => r.stop_area));
     } catch (e) {
-        console.error(e);
+        console.error('Error in /regions:', e);
         res.status(500).json({ msg: "Internal server error", error: e.toString() });
     }
 });
@@ -72,7 +78,7 @@ Router.get('/buses', async (req, res) => {
             }
         });
 
-        // ✅ СОРТИРОВКА ПО ЗАДАНИЮ
+        // СОРТИРОВКА ПО ЗАДАНИЮ
         const sortedBuses = uniqueBuses.sort((a, b) =>
             a.localeCompare(b, undefined, { numeric: true })
         );
