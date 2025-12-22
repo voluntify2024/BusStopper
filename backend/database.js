@@ -1,11 +1,11 @@
 const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize(
-  process.env.DB_NAME || 'd26893_busstops',
-  process.env.DB_USER || 'd26893_busstops',
-  process.env.DB_PASSWORD || '3w7PYquFJhver0!KdOfF',
+  'd26893_busstops',       // имя базы
+  'd26893_busstops',       // пользователь
+  '3w7PYquFJhver0!KdOfF',  // пароль
   {
-    host: process.env.DB_HOST || 'd26893.mysql.zonevs.eu',
+    host: 'd26893.mysql.zonevs.eu',
     dialect: 'mysql',
     port: 3306,
     logging: false
